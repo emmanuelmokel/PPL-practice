@@ -15,6 +15,6 @@ model{
 }
 
 generated quantities{
-    int<lower=0, upper = 1> boys_gt_girls = theta > 0.5
+    int<lower=0, upper = 1> boys_gt_girls = theta > 0.5;
 }
 
