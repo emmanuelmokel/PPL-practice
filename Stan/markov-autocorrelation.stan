@@ -1,20 +1,15 @@
 
 
 data {
-    int<lower = 0> N;
-    int<lower = 0, upper = N> y;
-}
-
-parameters{
-    real<lower=0, upper=1> theta;
-}
-
-model{
-    theta ~ beta(1, 1);
-    y ~ binomial(N, theta);
+    int<lower = 0> M;
+    real<lower = 0, upper = 1> rho;
 }
 
 generated quantities{
-    int<lower=0, upper = 1> boys_gt_girls = theta > 0.5
+    array[M] int<lower = 0, upper = 1> y;
+    y[1] = bernoulli_rng(0.5);
+    for (m in 2:M){
+        y[m] = bernoulli_rng(y[m-1] ? rho: 1-rho);
+    }
 }
 
